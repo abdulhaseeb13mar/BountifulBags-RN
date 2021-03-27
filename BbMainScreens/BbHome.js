@@ -16,7 +16,6 @@ import Loop from '../BbFrequentUsage//BbFlatList';
 import RefNavigation from '../BbFrequentUsage/BbRefNavigation';
 import {connect} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import dp from '../AllAssets/Images/donut2.png';
 // import FastImage from 'react-native-fast-image';
 import {
   DzsetCurrentProductAction,
@@ -82,11 +81,11 @@ function DzHome(props) {
             zIndex: -1,
             transform: [{perspective: 850}, {rotateY: '40deg'}],
           }}></View>
-        <FastImage
+        {/* <FastImage
           source={dp}
           style={{width: 180, height: 180, zIndex: 5}}
           resizeMode="contain"
-        />
+        /> */}
       </View>
     </WrapperScreen>
   );
