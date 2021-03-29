@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  ScrollView,
 } from 'react-native';
 import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
 import {colors, textFont} from '../BbFrequentUsage/BbColor';
@@ -18,91 +19,73 @@ import {connect} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // import FastImage from 'react-native-fast-image';
 import {
-  DzsetCurrentProductAction,
-  DzremoveFavAction,
-  DzsetFavAction,
+  BbsetCurrentProductAction,
+  BbremoveFavAction,
+  BbsetFavAction,
 } from '../BbStateManagement/BbActions';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import DzSearchBar from '../DzComp/DzSearchBar';
-// import DzHeader from '../DzComp/DzHeader';
+// import BbSearchBar from '../BbComp/BbSearchBar';
+// import BbHeader from '../BbComp/BbHeader';
 // import UseHeader from '../BbFrequentUsage/BbHeader';
 import FastImage from 'react-native-fast-image';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-function DzHome(props) {
+function BbHome(props) {
   useEffect(() => {
-    // DzchangeTab(Data.category[0]);
+    BbchangeTab(Data.Category[0]);
   });
-  // const insets = useSafeAreaInsets();
-  // const HEIGHT = H_W.height - (insets.bottom + insets.top);
-  // const [Dzcategories] = useState(Data.category);
-  // const [DzcurrentCat, setDzCurrentCat] = useState(Data.category[0]);
-  // const [DztabProducts, setDzTabProducts] = useState([]);
-  // const [, setFavourites] = useState([]);
+  const insets = useSafeAreaInsets();
+  const HEIGHT = H_W.height - (insets.bottom + insets.top);
+  const [Bbcategories] = useState(Data.Category);
+  const [BbcurrentCat, setBbCurrentCat] = useState(Data.Category[0]);
+  const [BbtabProducts, setBbTabProducts] = useState([]);
 
-  // const DzchangeTab = (tab) => {
-  //   setDzCurrentCat(tab);
-  //   const filteredProducts = Data.product.filter(
-  //     (item) => item.categoryId === tab.id,
-  //   );
-  //   const filterFavorites = props.DzFavs.filter(
-  //     (item) => item.categoryId === tab.id,
-  //   );
-  //   setDzTabProducts(filteredProducts);
-  //   setFavourites(filterFavorites);
-  // };
+  const BbchangeTab = (tab) => {
+    setBbCurrentCat(tab);
+    const filteredProducts = Data.Product.filter(
+      (item) => item.categoryid === tab.id,
+    );
+    setBbTabProducts(filteredProducts);
+  };
 
-  // // const DzGotoFav = () => RefNavigation.Navigate('DzFav');
-  // const DzGotoCart = () => RefNavigation.Navigate('DzCart');
-  // const DzGotoSearch = () => RefNavigation.Navigate('DzSearch');
-  // const DzGoToSingleProduct = (item) => {
-  //   props.DzsetCurrentProductAction(item);
-  //   RefNavigation.Navigate('DzSP');
+  // // const BbGotoFav = () => RefNavigation.Navigate('BbFav');
+  // const BbGotoCart = () => RefNavigation.Navigate('BbCart');
+  // const BbGotoSearch = () => RefNavigation.Navigate('BbSearch');
+  // const BbGoToSingleProduct = (item) => {
+  //   props.BbsetCurrentProductAction(item);
+  //   RefNavigation.Navigate('BbSP');
   // };
 
   return (
     <WrapperScreen style={{backgroundColor: 'white'}}>
-      <View
-        style={{
-          flexDirection: 'row-reverse',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          position: 'relative',
-          marginTop: 80,
-        }}>
-        <View
-          style={{
-            position: 'absolute',
-            width: 400,
-            height: 200,
-            borderRadius: 30,
-            backgroundColor: 'black',
-            zIndex: -1,
-            transform: [{perspective: 850}, {rotateY: '40deg'}],
-          }}></View>
-        {/* <FastImage
-          source={dp}
-          style={{width: 180, height: 180, zIndex: 5}}
-          resizeMode="contain"
-        /> */}
-      </View>
+      <ScrollView style={{...border, flex: 1}}>
+        <Text>Adasdas</Text>
+        <Text>Adasdas</Text>
+        <Text>asdas</Text>
+        <View style={{...border, flex: 1}}>
+          {/* <Loop
+            data={Bbcategories}
+            renderItems={({item}) => <TabList item={item} />}
+          /> */}
+        </View>
+      </ScrollView>
     </WrapperScreen>
   );
 }
 
-export const DzVerticalTile = ({
+export const BbVerticalTile = ({
   item,
-  DzGoToSingleProduct,
-  DzFavs,
-  DzremoveFav,
-  DzsetFav,
+  BbGoToSingleProduct,
+  BbFavs,
+  BbremoveFav,
+  BbsetFav,
 }) => {
   const insets = useSafeAreaInsets();
   const HEIGHT = H_W.height - (insets.bottom + insets.top);
   return (
     <TouchableOpacity
-      onPress={() => DzGoToSingleProduct(item)}
+      onPress={() => BbGoToSingleProduct(item)}
       style={{
         width: H_W.width * 0.42,
         marginHorizontal: H_W.width * 0.04,
@@ -176,52 +159,12 @@ export const DzVerticalTile = ({
   );
 };
 
-export const TabList = ({item, DzchangeTab, DzcurrentCat}) => {
+export const TabList = ({item, BbchangeTab, BbcurrentCat}) => {
   const insets = useSafeAreaInsets();
   const HEIGHT = H_W.height - (insets.bottom + insets.top);
   return (
-    <TouchableOpacity
-      style={{
-        ...styles.HomeTabsWrapper,
-        backgroundColor: `rgba(${colors.rgb_Primary},${
-          item.categoryName === DzcurrentCat.categoryName ? 1 : 0.15
-        })`,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.4,
-        shadowRadius: 4.65,
-      }}
-      onPress={() => DzchangeTab(item)}>
-      <ImageBackground
-        source={item.categoryImage}
-        style={
-          item.categoryName === DzcurrentCat.categoryName
-            ? {
-                width: H_W.width * 0.16,
-                height: H_W.width * 0.16,
-              }
-            : {width: H_W.width * 0.13, height: H_W.width * 0.13}
-        }
-        imageStyle={
-          item.categoryName === DzcurrentCat.categoryName
-            ? {marginLeft: -H_W.width * 0.06, marginTop: -HEIGHT * 0.02}
-            : {}
-        }
-        resizeMode="contain"
-      />
-      <Text
-        style={{
-          ...styles.HomeTabsText,
-          color:
-            item.categoryName === DzcurrentCat.categoryName
-              ? 'white'
-              : colors.primary,
-        }}>
-        {item.categoryName}
-      </Text>
+    <TouchableOpacity>
+      <Text style={{color: 'black'}}>{item.category}</Text>
     </TouchableOpacity>
   );
 };
@@ -231,39 +174,39 @@ const border = {
   borderColor: 'red',
 };
 const styles = StyleSheet.create({
-  DzHome21: {},
-  DzHome20: {},
-  DzHome19: {},
-  DzHome18: {},
-  DzHome17: {},
-  DzHome16: {},
-  DzHome15: {},
-  DzHome14: {},
-  DzHome13: {},
-  DzHome12: {},
-  DzHome11: {
+  BbHome21: {},
+  BbHome20: {},
+  BbHome19: {},
+  BbHome18: {},
+  BbHome17: {},
+  BbHome16: {},
+  BbHome15: {},
+  BbHome14: {},
+  BbHome13: {},
+  BbHome12: {},
+  BbHome11: {
     fontSize: 19,
     fontFamily: textFont.DINAlternate,
     color: colors.primary,
   },
-  DzHome10: {
+  BbHome10: {
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
-  DzHome9: {
+  BbHome9: {
     marginLeft: H_W.width * 0.045,
     color: colors.secondary,
     fontSize: 15,
     fontWeight: 'bold',
   },
-  DzHome8: {display: 'flex', flexDirection: 'row', alignItems: 'center'},
-  DzHome7: {
+  BbHome8: {display: 'flex', flexDirection: 'row', alignItems: 'center'},
+  BbHome7: {
     fontSize: 18.5,
     fontFamily: textFont.DINAlternate,
     color: colors.darkGray,
   },
-  DzHome6: {
+  BbHome6: {
     margin: H_W.width * 0.023,
     width: H_W.width * 0.45,
     padding: 7,
@@ -277,7 +220,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6.27,
     borderRadius: 8,
   },
-  DzHome5: {
+  BbHome5: {
     width: '85%',
     shadowColor: '#000',
     shadowOffset: {
@@ -287,24 +230,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 17.11,
   },
-  DzHome4: {
+  BbHome4: {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  DzHome3: {
+  BbHome3: {
     fontWeight: 'bold',
     fontSize: 20,
     fontFamily: 'Verdana-Bold',
     fontStyle: 'italic',
     color: 'white',
   },
-  DzHome2: {
+  BbHome2: {
     fontWeight: 'bold',
     fontSize: 20,
     fontFamily: 'Verdana-Bold',
     color: 'white',
   },
-  DzHome1: {
+  BbHome1: {
     backgroundColor: colors.primary,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
@@ -335,13 +278,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    DztotalItems: state.DzCartReducer.totalItems,
-    DzFavs: state.DzToggleFav,
+    // BbtotalItems: state.BbCartReducer.totalItems,
+    BbFavs: state.BbToggleFav,
   };
 };
 
 export default connect(mapStateToProps, {
-  DzsetCurrentProductAction,
-  DzremoveFavAction,
-  DzsetFavAction,
-})(DzHome);
+  BbsetCurrentProductAction,
+  BbremoveFavAction,
+  BbsetFavAction,
+})(BbHome);
