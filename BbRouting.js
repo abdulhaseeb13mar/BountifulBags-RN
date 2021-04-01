@@ -6,12 +6,12 @@ import {
 import {NavigationContainer} from '@react-navigation/native';
 import Navigator from './BbFrequentUsage/BbRefNavigation';
 import BbHome from './BbMainScreens/BbHome';
-// import DzSP from './DzSrc/DzSP';
-// import DzCart from './DzSrc/DzCart';
-// import DzFav from './DzSrc/DzFav';
-// import DzContact from './DzSrc/DzContact';
-// import DzConfirmOrder from './DzSrc/DzConfirmOrder';
-// import DzSearch from './DzSrc/DzSearch';
+import BbSP from './BbMainScreens/BbSP';
+import BbCart from './BbMainScreens/BbCart';
+import BbFav from './BbMainScreens/BbFav';
+import BbContact from './BbMainScreens/BbContact';
+// import BbConfirmOrder from './BbSrc/BbConfirmOrder';
+import BbSearch from './BbMainScreens/BbSearch';
 const Stack = createStackNavigator();
 
 function Routes(props) {
@@ -27,12 +27,12 @@ function Routes(props) {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}>
         <Stack.Screen name="BbHome" component={BbHome} />
-        {/* <Stack.Screen name="DzSP" component={DzSP} /> */}
-        {/* <Stack.Screen name="DzFav" component={DzFav} /> */}
-        {/* <Stack.Screen name="DzCart" component={DzCart} /> */}
-        {/* <Stack.Screen name="DzContact" component={DzContact} /> */}
-        {/* <Stack.Screen name="DzConfirmOrder" component={DzConfirmOrder} /> */}
-        {/* <Stack.Screen name="DzSearch" component={DzSearch} /> */}
+        <Stack.Screen name="BbSP" component={BbSP} />
+        <Stack.Screen name="BbFav" component={BbFav} />
+        <Stack.Screen name="BbCart" component={BbCart} />
+        <Stack.Screen name="BbContact" component={BbContact} />
+        {/* <Stack.Screen name="BbConfirmOrder" component={BbConfirmOrder} /> */}
+        <Stack.Screen name="BbSearch" component={BbSearch} />
       </Stack.Navigator>
     </NavigationContainer>
   );

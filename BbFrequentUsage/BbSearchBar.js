@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, TextInput} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {H_W} from './DzDim';
-import {colors} from './BbColor';
+import {H_W} from '../BbFrequentUsage/BbResponsive';
+import {colors, textFont} from '../BbFrequentUsage/BbColor';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export default function SearchBar({editable, changeSearchText}) {
@@ -21,7 +21,7 @@ export default function SearchBar({editable, changeSearchText}) {
         style={styles.SB_input}
         placeholderTextColor={colors.lightGrey3}
         editable={editable}
-        placeholder="Search Food..."
+        placeholder="Search Here..."
         onBlur={() => ChangeFocus(false)}
         onFocus={() => ChangeFocus(true)}
         onChangeText={onChangeText}

@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import {colors} from './DzColor';
-import {H_W} from './DzDim';
+import {colors} from './BbColor';
+import {H_W} from './BbResponsive';
 import {Badge} from 'react-native-elements';
 import {connect} from 'react-redux';
 
@@ -49,7 +49,7 @@ function MyHeader({
               color={leftIconColor ? leftIconColor : colors.primary}
               style={leftIconStyle ? leftIconStyle : {}}
             />
-            {totalItems > 0 && leftIconName.includes('shopping') && (
+            {totalItems > 0 && leftIconName.includes('cart') && (
               <Badge
                 value={totalItems}
                 containerStyle={styles.badgeContainer}
@@ -77,7 +77,7 @@ function MyHeader({
               color={rightIconColor ? rightIconColor : colors.primary}
               style={rightIconStyle ? rightIconStyle : {}}
             />
-            {totalItems > 0 && rightIconName.includes('shopping') && (
+            {totalItems > 0 && rightIconName.includes('cart') && (
               <Badge
                 value={totalItems}
                 containerStyle={styles.badgeContainer}
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  totalItems: state.DzCartReducer.totalItems,
+  totalItems: state.BbCartReducer.totalItems,
 });
 
 export default connect(mapStateToProps, {})(MyHeader);

@@ -3,59 +3,74 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Text, View, StyleSheet} from 'react-native';
 import {
-  DzremoveFavAction,
-  DzsetFavAction,
-  DzsetCurrentProductAction,
-} from '../DzRedux/DzActions';
+  BbremoveFavAction,
+  BbsetFavAction,
+  BbsetCurrentProductAction,
+} from '../BbStateManagement/BbActions';
 import Entypo from 'react-native-vector-icons/Entypo';
-import UseHeader from '../DzComp/DzHeader';
-import {colors} from '../DzComp/DzColor';
-import WrapperScreen from '../DzComp/DzWrapperScreen';
-import Loop from '../DzComp/DzFlatList';
-import NavigationRef from '../DzComp/DzRefNavigation';
-import {DzVerticalTile} from './DzHome';
+import {H_W} from '../BbFrequentUsage/BbResponsive';
+import BbHeader from '../BbFrequentUsage/BbHeader';
+import {colors, textFont} from '../BbFrequentUsage/BbColor';
+import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
+import Loop from '../BbFrequentUsage//BbFlatList';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import NavigationRef from '../BbFrequentUsage/BbRefNavigation';
+import {BbVerticalTile} from './BbHome';
 
-const DzFavourites = (props) => {
-  const DzGoToSingleProduct = (item) => {
-    props.DzsetCurrentProductAction(item);
-    NavigationRef.Navigate('DzSP');
+const BbFavourites = (props) => {
+  const BbGoToSingleProduct = (item) => {
+    props.BbsetCurrentProductAction(item);
+    NavigationRef.Navigate('BbSP');
   };
 
-  const DzGoBack = () => NavigationRef.Navigate('DzHome');
+  const BbGoBack = () => NavigationRef.Navigate('BbHome');
 
   return (
-    <WrapperScreen
-      style={{backgroundColor: 'white'}}
-      barStyle="light-content"
-      statusColor={colors.primary}>
+    <WrapperScreen style={{backgroundColor: colors.lightBackground}}>
+      <View
+        style={{
+          width: 100,
+          height: 100,
+          borderRadius: 50,
+          backgroundColor: 'rgba(188,188,188,0.15)',
+          transform: [{scaleX: H_W.width * 0.016}, {scaleY: H_W.width * 0.017}],
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+        }}
+      />
       <View style={{flex: 1}}>
         <Loop
-          numColumns={2}
+          // numColumns={2}
           horizontal={false}
-          data={props.DzFavs}
+          data={props.BbFavs}
           renderItem={({item}) => (
-            <DzVerticalTile
-              item={item}
-              DzGoToSingleProduct={DzGoToSingleProduct}
-              DzFavs={props.DzFavs}
-              DzsetFav={(fd) => props.DzsetFavAction(fd)}
-              DzremoveFav={(fd) => props.DzremoveFavAction(fd)}
-            />
-          )}
-          ListHeaderComponent={
-            <View style={styles.DzFav1}>
-              <UseHeader
-                leftIcon={Entypo}
-                leftIconName="chevron-left"
-                leftIconColor="white"
-                leftIconAction={DzGoBack}
-                Title={
-                  <Text style={styles.DzFav2}>
-                    {props.DzFavs.length} Favourites
-                  </Text>
-                }
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingVertical: 10,
+              }}>
+              <BbVerticalTile
+                item={item}
+                BbGoToSingleProduct={BbGoToSingleProduct}
+                BbFavs={props.BbFavs}
+                BbsetFav={(fd) => props.BbsetFavAction(fd)}
+                BbremoveFav={(fd) => props.BbremoveFavAction(fd)}
               />
             </View>
+          )}
+          ListHeaderComponent={
+            <BbHeader
+              leftIcon={AntDesign}
+              leftIconName="arrowleft"
+              leftIconAction={BbGoBack}
+              Title={
+                <Text style={styles.BbFav2}>
+                  {props.BbFavs.length} Favourites
+                </Text>
+              }
+            />
           }
         />
       </View>
@@ -65,26 +80,26 @@ const DzFavourites = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    DzFavs: state.DzToggleFav,
+    BbFavs: state.BbToggleFav,
   };
 };
 
 export default connect(mapStateToProps, {
-  DzsetFavAction,
-  DzsetCurrentProductAction,
-  DzremoveFavAction,
-})(DzFavourites);
+  BbsetFavAction,
+  BbsetCurrentProductAction,
+  BbremoveFavAction,
+})(BbFavourites);
 
 const styles = StyleSheet.create({
-  DzFav1: {
+  BbFav1: {
     backgroundColor: colors.primary,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },
-  DzFav2: {
-    color: 'white',
+  BbFav2: {
+    color: colors.primary,
     fontSize: 22,
   },
-  DzFav3: {},
-  DzFav4: {},
+  BbFav3: {},
+  BbFav4: {},
 });

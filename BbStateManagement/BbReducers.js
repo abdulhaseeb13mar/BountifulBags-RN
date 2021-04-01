@@ -10,7 +10,7 @@ let cart = {
   totalAmount: 0,
 };
 
-const DzCartReducer = (st = cart, action) => {
+const BbCartReducer = (st = cart, action) => {
   let prev_items = {...st.items};
   switch (action.type) {
     case ActionTypes.ADD_ITEM_CART:
@@ -63,7 +63,7 @@ const DzCartReducer = (st = cart, action) => {
   return st;
 };
 
-const DzUserReducer = (st = userState, action) => {
+const BbUserReducer = (st = userState, action) => {
   switch (action.type) {
     case ActionTypes.USER_INFO:
       st = Object.assign({}, st, {...action.payload});
@@ -75,7 +75,7 @@ const DzUserReducer = (st = userState, action) => {
   return st;
 };
 
-const DzCrntPrdtReducer = (state = crntPrdtState, action) => {
+const BbCrntPrdtReducer = (state = crntPrdtState, action) => {
   switch (action.type) {
     case ActionTypes.SET_CURRENT_PRODUCT:
       state = Object.assign({}, state, {...action.payload});
@@ -87,7 +87,7 @@ const DzCrntPrdtReducer = (state = crntPrdtState, action) => {
   return state;
 };
 
-const DzToggleFav = (state = FavItems, action) => {
+const BbToggleFav = (state = FavItems, action) => {
   switch (action.type) {
     case ActionTypes.SET_FAVOURITE:
       let isUnique = true;
@@ -112,8 +112,8 @@ const DzToggleFav = (state = FavItems, action) => {
 };
 
 export default combineReducers({
-  DzCartReducer,
-  DzToggleFav,
-  DzCrntPrdtReducer,
-  DzUserReducer,
+  BbCartReducer,
+  BbToggleFav,
+  BbCrntPrdtReducer,
+  BbUserReducer,
 });

@@ -7,39 +7,40 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import {H_W} from '../DzComp/DzDim';
-import WrapperScreen from '../DzComp/DzWrapperScreen';
+import {H_W} from '../BbFrequentUsage/BbResponsive';
+import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
 import {connect} from 'react-redux';
-import {colors, textFont} from '../DzComp/DzColor';
-import NavigationRef from '../DzComp/DzRefNavigation';
+import {colors, textFont} from '../BbFrequentUsage/BbColor';
+import NavigationRef from '../BbFrequentUsage/BbRefNavigation';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button} from 'react-native-elements';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Feather from 'react-native-vector-icons/Feather';
-import DzHeader from '../DzComp/DzHeader';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
-  DzremoveFavAction,
-  DzsetFavAction,
-  DzaddCartAction,
-  DzremoveCartAction,
-} from '../DzRedux/DzActions';
+  BbremoveFavAction,
+  BbsetFavAction,
+  BbaddCartAction,
+  BbremoveCartAction,
+} from '../BbStateManagement/BbActions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FastImage from 'react-native-fast-image';
 import StarRating from '../starRating';
+import {Badge} from 'react-native-elements';
 
 function SingleProduct(props) {
   useEffect(() => {
     checkIfFav();
   }, []);
-  const DzProduct = props.DzProduct;
+  const BbProduct = props.BbProduct;
   const [fav, setFav] = useState(false);
-  const [currentImage, setCurrentImage] = useState(DzProduct.images);
   const insets = useSafeAreaInsets();
   const HEIGHT = H_W.height - (insets.bottom + insets.top);
 
   const checkIfFav = () => {
-    for (let us = 0; us < props.DzFavs.length; us++) {
-      if (props.DzFavs[us].id === DzProduct.id) {
+    for (let Bb = 0; Bb < props.BbFavs.length; Bb++) {
+      if (props.BbFavs[Bb].id === BbProduct.id) {
         setFav(true);
         break;
       }
@@ -48,22 +49,22 @@ function SingleProduct(props) {
 
   const toggleFav = () => {
     fav
-      ? props.DzremoveFavAction(DzProduct.id)
-      : props.DzsetFavAction(DzProduct);
+      ? props.BbremoveFavAction(BbProduct.id)
+      : props.BbsetFavAction(BbProduct);
     setFav(!fav);
   };
 
-  const DzAddToCart = () => {
-    props.DzaddCartAction({...DzProduct});
+  const BbAddToCart = () => {
+    props.BbaddCartAction({...BbProduct});
   };
 
-  const DzRemoveFromCart = () => {
-    props.DzCart[DzProduct.id].added !== 0 &&
-      props.DzremoveCartAction(DzProduct);
+  const BbRemoveFromCart = () => {
+    props.BbCart[BbProduct.id] !== undefined &&
+      props.BbremoveCartAction(BbProduct);
   };
 
   const renderSmallImages = () => {
-    return [DzProduct.images, DzProduct.images, DzProduct.images].map(
+    return [BbProduct.images, BbProduct.images, BbProduct.images].map(
       (item, index) => (
         <TouchableOpacity
           onPress={() => setCurrentImage(item)}
@@ -86,231 +87,253 @@ function SingleProduct(props) {
     );
   };
 
-  const DzGotoCart = () => NavigationRef.Navigate('DzCart');
-  const DzGoBack = () => NavigationRef.GoBack();
+  const BbGotoCart = () => NavigationRef.Navigate('BbCart');
+  const BbGoBack = () => NavigationRef.GoBack();
 
   return (
-    <WrapperScreen style={{backgroundColor: 'white'}}>
+    <WrapperScreen style={{backgroundColor: BbProduct.bgcolor}}>
       <KeyboardAwareScrollView bounces={false}>
-        <DzHeader
-          leftIcon={Entypo}
-          rightIcon={FontAwesome}
-          rightIconName="bookmark"
-          leftIconName="chevron-left"
-          leftIconAction={DzGoBack}
-          leftIconColor={colors.primary}
-          rightIconAction={toggleFav}
-          rightIconColor={`rgba(224,180,0, ${fav ? 1 : 0.4})`}
-          Title={<Text style={{fontSize: 20}}>Details</Text>}
-        />
-        <View style={styles.DzSp1}>
-          <ImageBackground
-            source={currentImage}
-            style={{
-              width: '100%',
-              height: HEIGHT * 0.34,
-              shadowColor: colors.darkGray,
-              shadowOffset: {
-                width: 0,
-                height: 35,
-              },
-              shadowOpacity: 0.46,
-              shadowRadius: 30.14,
-            }}
-            resizeMode="contain"
-          />
+        <View
+          style={{...border, alignItems: 'center', justifyContent: 'center'}}>
           <View
             style={{
-              alignItems: 'center',
-              justifyContent: 'center',
+              ...border,
+              width: '100%',
               flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingHorizontal: H_W.width * 0.04,
+              marginTop: HEIGHT * 0.03,
+            }}>
+            <TouchableOpacity onPress={BbGoBack}>
+              <AntDesign name="arrowleft" size={23} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={BbGotoCart}>
+              <MaterialCommunityIcons name="cart-outline" size={23} />
+              {props.totalItems > 0 && (
+                <Badge
+                  value={props.totalItems}
+                  containerStyle={{position: 'absolute', bottom: 0, right: 0}}
+                  badgeStyle={{
+                    backgroundColor: 'red',
+                  }}
+                />
+              )}
+            </TouchableOpacity>
+          </View>
+          <FastImage
+            source={BbProduct.image}
+            style={{width: H_W.width * 0.8, height: HEIGHT * 0.6, ...border}}
+            resizeMode="contain"
+          />
+        </View>
+        <View
+          style={{
+            backgroundColor: 'white',
+            borderRadius: 40,
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            paddingHorizontal: H_W.width * 0.1,
+            // paddingBottom: HEIGHT * 0.02,
+          }}>
+          <TouchableOpacity
+            onPress={toggleFav}
+            style={{
+              backgroundColor: 'white',
+              // ...border,
+              alignSelf: 'flex-end',
+              padding: 10,
+              borderRadius: 50,
+              elevation: 4,
+              marginTop: -HEIGHT * 0.028,
+            }}>
+            <Ionicons name={fav ? 'ios-heart' : 'heart-outline'} size={20} />
+          </TouchableOpacity>
+          <Text
+            style={{
+              alignSelf: 'flex-start',
+              ...border,
+              width: H_W.width * 0.65,
+              fontWeight: 'bold',
+              fontSize: 23,
+            }}>
+            {BbProduct.product}
+          </Text>
+          <View
+            style={{
+              alignSelf: 'flex-start',
+              ...border,
+              width: '100%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <View style={{flexDirection: 'row', ...border}}>
+              <StarRating rating={2.5} size={H_W.width * 0.18} />
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: colors.lightBackground2,
+                  marginLeft: H_W.width * 0.04,
+                }}>
+                {BbProduct.rating}
+              </Text>
+            </View>
+            <Text style={{fontWeight: 'bold', fontSize: 19}}>
+              ${BbProduct.price}
+            </Text>
+          </View>
+          <Text
+            style={{
+              ...border,
+              fontWeight: 'bold',
+              lineHeight: HEIGHT * 0.03,
+              marginTop: HEIGHT * 0.02,
+            }}>
+            {BbProduct.dis}
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
               marginTop: HEIGHT * 0.01,
             }}>
-            {renderSmallImages()}
-          </View>
-        </View>
-        <Text
-          style={{
-            ...styles.DzSp2,
-            marginTop: HEIGHT * 0.01,
-          }}>
-          {DzProduct.productName}
-        </Text>
-        <View
-          style={{
-            marginTop: HEIGHT * 0.005,
-            ...styles.DzSp3,
-          }}>
-          <StarRating rating={DzProduct.rating} size={H_W.width * 0.2} />
-          <Text style={styles.DzSp4}>{DzProduct.rating}</Text>
-        </View>
-        <Text
-          style={{
-            marginHorizontal: H_W.width * 0.03,
-            fontWeight: 'bold',
-            fontSize: 18,
-            color: colors.primary,
-            marginTop: HEIGHT * 0.04,
-          }}>
-          Details
-        </Text>
-        <Text
-          style={{
-            ...styles.DzSp5,
-            marginTop: HEIGHT * 0.015,
-            paddingBottom: HEIGHT * 0.02,
-          }}>
-          {DzProduct.Description}
-        </Text>
-        <View style={{...styles.DzSp6, marginTop: HEIGHT * 0.015}}>
-          <View>
-            <Text style={{color: colors.darkGray, fontWeight: 'bold'}}>
-              Price
+            <Text
+              style={{
+                color: colors.lightGrey3,
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>
+              Quantity
             </Text>
-            <Text style={{fontFamily: textFont.DINAlternate, fontSize: 26}}>
-              $ {DzProduct.price}
-            </Text>
-          </View>
-          {props.DzCart[DzProduct.id] !== undefined &&
-          props.DzCart[DzProduct.id].added !== 0 ? (
             <View
               style={{
-                ...styles.DzSp7,
-                height: HEIGHT * 0.06,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: '35%',
               }}>
-              <TouchableOpacity onPress={DzRemoveFromCart} style={styles.DzSp8}>
-                <Feather name="minus" color="white" size={23} />
+              <TouchableOpacity
+                onPress={BbRemoveFromCart}
+                style={{
+                  padding: 6,
+                  backgroundColor: colors.lightBackground,
+                  borderRadius: 5,
+                }}>
+                <FontAwesome name="minus" color={colors.darkGray} />
               </TouchableOpacity>
-              <Text style={styles.DzSp9}>
-                {props.DzCart[DzProduct.id].added}
-              </Text>
-              <TouchableOpacity onPress={DzAddToCart} style={styles.DzSp10}>
-                <Feather name="plus" color="white" size={23} />
+              <View
+                style={{
+                  padding: 5,
+                  backgroundColor: colors.lightBackground,
+                  borderRadius: 5,
+                }}>
+                <Text style={{fontWeight: 'bold', color: colors.darkGray}}>
+                  {props.BbCart[BbProduct.id] === undefined
+                    ? 0
+                    : props.BbCart[BbProduct.id].added}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={BbAddToCart}
+                style={{
+                  padding: 6,
+                  backgroundColor: colors.lightBackground,
+                  borderRadius: 5,
+                }}>
+                <FontAwesome name="plus" color={colors.darkGray} />
               </TouchableOpacity>
             </View>
-          ) : (
-            <TouchableOpacity
-              onPress={DzAddToCart}
-              style={{
-                ...styles.DzSp11,
-                height: HEIGHT * 0.06,
-              }}>
-              <Text style={styles.DzSp12}>Add to Cart</Text>
-              {/* <View
-                style={{
-                  height: HEIGHT * 0.06,
-                  ...styles.DzSp13,
-                }}>
-                <Feather name="plus" color="white" size={25} />
-              </View> */}
-            </TouchableOpacity>
-          )}
-        </View>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: HEIGHT * 0.02,
-          }}>
+          </View>
           <Button
-            raised
-            onPress={DzGotoCart}
-            title="Order Now"
-            titleStyle={{fontWeight: 'bold', fontSize: 18}}
-            containerStyle={{width: '80%', borderRadius: 50}}
+            onPress={BbAddToCart}
+            title="Add To My Cart"
             buttonStyle={{
+              backgroundColor: colors.primary,
               borderRadius: 50,
               paddingVertical: HEIGHT * 0.02,
-              backgroundColor: colors.primary,
-              shadowColor: colors.primary,
-              shadowOffset: {
-                width: 0,
-                height: 8,
-              },
-              shadowOpacity: 0.46,
-              shadowRadius: 11.14,
+            }}
+            icon={
+              <MaterialCommunityIcons
+                name="cart-outline"
+                size={20}
+                color="white"
+                style={{marginRight: H_W.width * 0.01}}
+              />
+            }
+            containerStyle={{
+              width: H_W.width,
+              borderRadius: 50,
+              marginTop: HEIGHT * 0.02,
             }}
           />
         </View>
       </KeyboardAwareScrollView>
-      {/* <View
-        style={{
-          marginBottom: -insets.bottom,
-          paddingBottom: insets.bottom,
-          backgroundColor: colors.primary,
-        }}>
-        <Button
-          onPress={DzGotoCart}
-          title="View Cart"
-          titleStyle={{fontWeight: 'bold', fontSize: 23}}
-          buttonStyle={{
-            paddingVertical: HEIGHT * 0.02,
-            backgroundColor: colors.primary,
-          }}
-        />
-      </View> */}
     </WrapperScreen>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    DzProduct: state.DzCrntPrdtReducer,
-    DzFavs: state.DzToggleFav,
-    DzCart: state.DzCartReducer.items,
+    BbProduct: state.BbCrntPrdtReducer,
+    BbFavs: state.BbToggleFav,
+    totalItems: state.BbCartReducer.totalItems,
+    BbCart: state.BbCartReducer.items,
   };
 };
 const border = {
-  borderWidth: 1,
+  // borderWidth: 1,
   borderColor: 'red',
 };
 export default connect(mapStateToProps, {
-  DzsetFavAction,
-  DzremoveFavAction,
-  DzremoveCartAction,
-  DzaddCartAction,
+  BbsetFavAction,
+  BbremoveFavAction,
+  BbremoveCartAction,
+  BbaddCartAction,
 })(React.memo(SingleProduct));
 
 const styles = StyleSheet.create({
-  DzSp1: {
+  BbSp1: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: H_W.width * 0.03,
   },
-  DzSp2: {
+  BbSp2: {
     fontWeight: 'bold',
     color: colors.primary,
     fontSize: 29,
     paddingHorizontal: H_W.width * 0.03,
     fontFamily: textFont.DINAlternate,
   },
-  DzSp3: {
+  BbSp3: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: H_W.width * 0.03,
   },
-  DzSp4: {
+  BbSp4: {
     marginLeft: H_W.width * 0.065,
     color: colors.lightGrey3,
     fontSize: 18,
     fontWeight: 'bold',
     textAlignVertical: 'center',
   },
-  DzSp5: {
+  BbSp5: {
     paddingHorizontal: H_W.width * 0.03,
     fontSize: 15,
     color: colors.darkGray,
     fontWeight: 'bold',
     opacity: 0.5,
   },
-  DzSp6: {
+  BbSp6: {
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
     paddingHorizontal: H_W.width * 0.03,
   },
-  DzSp7: {
+  BbSp7: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -320,26 +343,26 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingHorizontal: H_W.width * 0.04,
   },
-  DzSp8: {
+  BbSp8: {
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 50,
     padding: 2,
     backgroundColor: colors.primary,
   },
-  DzSp9: {
+  BbSp9: {
     fontSize: 20,
     fontWeight: 'bold',
     color: colors.primary,
   },
-  DzSp10: {
+  BbSp10: {
     alignItems: 'center',
     padding: 2,
     borderRadius: 50,
     backgroundColor: colors.primary,
     justifyContent: 'center',
   },
-  DzSp11: {
+  BbSp11: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -347,13 +370,13 @@ const styles = StyleSheet.create({
     width: H_W.width * 0.4,
     backgroundColor: `rgba(${colors.rgb_Primary}, 0.1)`,
   },
-  DzSp12: {
+  BbSp12: {
     flex: 1,
     textAlign: 'center',
     fontFamily: textFont.DINAlternate,
     fontSize: 18,
   },
-  DzSp13: {
+  BbSp13: {
     alignSelf: 'stretch',
     borderRadius: 50,
     width: H_W.width * 0.11,
@@ -361,8 +384,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.primary,
   },
-  DzSp14: {},
-  DzSp15: {},
-  DzSp16: {},
-  DzSp17: {},
+  BbSp14: {},
+  BbSp15: {},
+  BbSp16: {},
+  BbSp17: {},
 });

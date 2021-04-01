@@ -2,18 +2,19 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, TextInput} from 'react-native';
 import {connect} from 'react-redux';
-import WrapperScreen from '../DzComp/DzWrapperScreen';
+import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {H_W} from '../DzComp/DzDim';
-import {colors} from '../DzComp/DzColor';
+import {H_W} from '../BbFrequentUsage/BbResponsive';
+import {colors, textFont} from '../BbFrequentUsage/BbColor';
 import {Button, Overlay} from 'react-native-elements';
-import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {isFormValid} from '../DzComp/Dzvalidation';
-import NavPointer from '../DzComp/DzRefNavigation';
-import {DzUserAction, DzresetCart} from '../DzRedux/DzActions';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {isFormValid} from '../BbFrequentUsage/Bbvalidation';
+import NavPointer from '../BbFrequentUsage/BbRefNavigation';
+import {BbUserAction, BbresetCart} from '../BbStateManagement/BbActions';
 import Toast from 'react-native-root-toast';
-import UseHeader from '../DzComp/DzHeader';
+import UseHeader from '../BbFrequentUsage/BbHeader';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const ConfirmOrder = (props) => {
@@ -30,13 +31,13 @@ const ConfirmOrder = (props) => {
   const [addressErrMsg, setAddressErrMsg] = useState('');
   const [phone, setPhone] = useState('');
 
-  const DzConfirm = () => {
+  const BbConfirm = () => {
     const formValidResponse = isFormValid(firstName, email, phone, address);
     if (!formValidResponse.status) {
       errorMsgHandler(formValidResponse.errCategory, formValidResponse.errMsg);
     } else {
       CallApi();
-      props.DzUserAction({
+      props.BbUserAction({
         email: email,
         firstName: firstName,
         phone: phone,
@@ -106,42 +107,42 @@ const ConfirmOrder = (props) => {
   };
 
   const MoveToConfirmOrder = () => {
-    props.DzresetCart();
-    NavPointer.Push('DzConfirmOrder');
+    props.BbresetCart();
+    NavPointer.Push('BbConfirmOrder');
   };
 
   const closeModal = () => {
     setShowModal(false);
-    props.DzresetCart();
-    NavPointer.Push('DzHome');
+    props.BbresetCart();
+    NavPointer.Push('BbHome');
   };
 
   const changePhone = (t) => setPhone(t);
   const changeAddress = (t) => setAddress(t);
   const changeEmail = (t) => setEmail(t);
-  const DzGoBack = () => NavPointer.GoBack();
+  const BbGoBack = () => NavPointer.GoBack();
   const changeFirstName = (t) => setFirstName(t);
 
   return (
     <WrapperScreen style={{backgroundColor: 'white'}}>
       <KeyboardAwareScrollView style={styles.container} bounces={false}>
         <UseHeader
-          leftIcon={Entypo}
-          leftIconName="chevron-left"
+          leftIcon={AntDesign}
+          leftIconName="arrowleft"
           leftIconColor={colors.primary}
-          leftIconAction={DzGoBack}
-          Title={<Text style={styles.DzContact2}>Contact Info</Text>}
+          leftIconAction={BbGoBack}
+          Title={<Text style={styles.BbContact2}>Information</Text>}
         />
-        <View style={styles.DzPersonalInfoWrapper}>
-          <View style={styles.DzSinglePersonalInfoWrapper}>
+        <View style={styles.BbPersonalInfoWrapper}>
+          <View style={styles.BbSinglePersonalInfoWrapper}>
             <Text
               style={{
-                ...styles.DzPersonalInfoHeadingName,
+                ...styles.BbPersonalInfoHeadingName,
                 color: firstNameErrMsg ? 'red' : 'black',
               }}>
               FULL NAME <Text> {firstNameErrMsg}</Text>
             </Text>
-            <View style={styles.DzPersonalInfoInputWrapper}>
+            <View style={styles.BbPersonalInfoInputWrapper}>
               <TextInput
                 placeholder="Your Name"
                 style={{...styles.Input, height: HEIGHT * 0.065}}
@@ -150,15 +151,15 @@ const ConfirmOrder = (props) => {
               />
             </View>
           </View>
-          <View style={styles.DzSinglePersonalInfoWrapper}>
+          <View style={styles.BbSinglePersonalInfoWrapper}>
             <Text
               style={{
-                ...styles.DzPersonalInfoHeadingName,
+                ...styles.BbPersonalInfoHeadingName,
                 color: emailErrMsg ? 'red' : 'black',
               }}>
               EMAIL<Text> {emailErrMsg}</Text>
             </Text>
-            <View style={styles.DzPersonalInfoInputWrapper}>
+            <View style={styles.BbPersonalInfoInputWrapper}>
               <TextInput
                 placeholder="Email"
                 style={{...styles.Input, height: HEIGHT * 0.065}}
@@ -167,15 +168,15 @@ const ConfirmOrder = (props) => {
               />
             </View>
           </View>
-          <View style={styles.DzSinglePersonalInfoWrapper}>
+          <View style={styles.BbSinglePersonalInfoWrapper}>
             <Text
               style={{
-                ...styles.DzPersonalInfoHeadingName,
+                ...styles.BbPersonalInfoHeadingName,
                 color: phoneErrMsg ? 'red' : 'black',
               }}>
               PHONE NUMBER<Text> {phoneErrMsg}</Text>
             </Text>
-            <View style={styles.DzPersonalInfoInputWrapper}>
+            <View style={styles.BbPersonalInfoInputWrapper}>
               <TextInput
                 placeholder="Phone Number"
                 keyboardType="number-pad"
@@ -185,15 +186,15 @@ const ConfirmOrder = (props) => {
               />
             </View>
           </View>
-          <View style={styles.DzSinglePersonalInfoWrapper}>
+          <View style={styles.BbSinglePersonalInfoWrapper}>
             <Text
               style={{
-                ...styles.DzPersonalInfoHeadingName,
+                ...styles.BbPersonalInfoHeadingName,
                 color: addressErrMsg ? 'red' : 'black',
               }}>
               DELIVERY ADDRESS<Text> {addressErrMsg}</Text>
             </Text>
-            <View style={styles.DzPersonalInfoInputWrapper}>
+            <View style={styles.BbPersonalInfoInputWrapper}>
               <TextInput
                 placeholder="Address"
                 style={{...styles.Input, height: HEIGHT * 0.13}}
@@ -204,40 +205,22 @@ const ConfirmOrder = (props) => {
             </View>
           </View>
         </View>
-        <Text style={{...styles.DzContact4, marginVertical: HEIGHT * 0.015}}>
-          Details
-        </Text>
-        <View style={{...styles.DzSummaryOverlay, marginBottom: HEIGHT * 0.02}}>
-          <View style={styles.DzSm1}>
-            <View style={styles.DzSm2}>
-              <Text style={{fontSize: 23}}>Total Amount:</Text>
-              <Text style={{fontWeight: 'bold', fontSize: 23}}>
-                ${props.total}
-              </Text>
-            </View>
-            <View style={styles.DzSm3}>
-              <Text style={styles.DzSm4}>Payment Mode:</Text>
-              <Text style={styles.DzSm4}>Cash on delivery</Text>
-            </View>
-          </View>
-        </View>
         <Overlay
           onBackdropPress={closeModal}
           isVisible={showModal}
           animationType="fade">
           <View
             style={{
-              ...styles.DzModalWrapper,
+              ...styles.BbModalWrapper,
               paddingVertical: HEIGHT * 0.04,
             }}>
-            <Ionicons
-              name="fast-food-sharp"
+            <MaterialCommunityIcons
+              name="bag-personal"
               size={H_W.width * 0.25}
               color="white"
             />
-            <Text style={styles.DzModalHeadText}>THANK YOU!</Text>
-            <Text style={styles.DzModalSubText}>
-              Your order has been confirmed!
+            <Text style={styles.BbModalHeadText}>
+              YOUR ORDER HAS BEEN CONFIRMED!
             </Text>
           </View>
         </Overlay>
@@ -245,15 +228,16 @@ const ConfirmOrder = (props) => {
           style={{
             alignItems: 'center',
             justifyContent: 'center',
+            paddingBottom: 20,
           }}>
           <Button
             raised
             loading={loading}
-            onPress={DzConfirm}
-            disabled={props.DzTotalItems === 0}
+            onPress={BbConfirm}
+            disabled={props.BbTotalItems === 0}
             title="CONFIRM ORDER"
             titleStyle={{fontWeight: 'bold', fontSize: 20}}
-            containerStyle={{width: '80%', borderRadius: 50}}
+            containerStyle={{width: '100%', borderRadius: 50}}
             buttonStyle={{
               borderRadius: 50,
               paddingVertical: HEIGHT * 0.02,
@@ -275,44 +259,44 @@ const ConfirmOrder = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    total: state.DzCartReducer.totalAmount,
+    total: state.BbCartReducer.totalAmount,
   };
 };
 
-export default connect(mapStateToProps, {DzUserAction, DzresetCart})(
+export default connect(mapStateToProps, {BbUserAction, BbresetCart})(
   React.memo(ConfirmOrder),
 );
 
 const styles = StyleSheet.create({
-  DzContact1: {
+  BbContact1: {
     backgroundColor: colors.primary,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     alignItems: 'center',
   },
-  DzContact2: {
+  BbContact2: {
     color: colors.primary,
     fontSize: 22,
   },
-  DzContact3: {
+  BbContact3: {
     marginLeft: H_W.width * 0.03,
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  DzContact4: {marginLeft: H_W.width * 0.03, fontSize: 20, fontWeight: 'bold'},
-  DzSm4: {fontSize: H_W.width * 0.045, fontWeight: 'bold'},
-  DzSm3: {
+  BbContact4: {marginLeft: H_W.width * 0.03, fontSize: 20, fontWeight: 'bold'},
+  BbSm4: {fontSize: H_W.width * 0.045, fontWeight: 'bold'},
+  BbSm3: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  DzSm2: {
+  BbSm2: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  DzSm1: {
+  BbSm1: {
     width: '85%',
     backgroundColor: `rgba(${colors.rgb_Primary}, 0.3)`,
     borderRadius: 18,
@@ -326,7 +310,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     padding: H_W.width * 0.04,
   },
-  DzSummaryOverlay: {
+  BbSummaryOverlay: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -338,26 +322,27 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
   },
-  DzModalSubText: {
+  BbModalSubText: {
     fontSize: H_W.width * 0.045,
     color: colors.darkGray,
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  DzModalHeadText: {
-    fontSize: H_W.width * 0.09,
+  BbModalHeadText: {
+    fontSize: H_W.width * 0.06,
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'white',
   },
-  DzModalWrapper: {
+  BbModalWrapper: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: H_W.width * 0.8,
     backgroundColor: colors.primary,
+    borderRadius: 10,
   },
-  DzConfirmButtonContainer: {
+  BbConfirmButtonContainer: {
     width: '100%',
     shadowColor: '#000',
     shadowOffset: {
@@ -369,12 +354,12 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 50,
   },
-  DzConfirmButton: {
+  BbConfirmButton: {
     backgroundColor: colors.primary,
 
     borderRadius: 50,
   },
-  DzConfirmButtonWrapper: {
+  BbConfirmButtonWrapper: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -386,14 +371,14 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontWeight: 'bold',
   },
-  DzInputIcon: {
+  BbInputIcon: {
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     width: H_W.width * 0.09,
     color: colors.secondary,
   },
-  DzPersonalInfoInputWrapper: {
+  BbPersonalInfoInputWrapper: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -401,20 +386,22 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightGrey4,
     paddingHorizontal: H_W.width * 0.02,
     borderRadius: 1,
+    borderColor: colors.primary,
+    borderWidth: 1.5,
   },
-  DzPersonalInfoHeadingName: {
+  BbPersonalInfoHeadingName: {
     fontSize: 13,
     fontWeight: 'bold',
     marginVertical: 6,
   },
-  DzSinglePersonalInfoWrapper: {
+  BbSinglePersonalInfoWrapper: {
     marginVertical: 10,
   },
-  DzPersonalInfoHeader: {
+  BbPersonalInfoHeader: {
     fontSize: 20,
     fontWeight: 'bold',
   },
-  DzPersonalInfoWrapper: {
+  BbPersonalInfoWrapper: {
     marginHorizontal: H_W.width * 0.035,
   },
   container: {flex: 1},

@@ -1,39 +1,41 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, ImageBackground, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {
-  DzremoveCartAction,
-  DzaddCartAction,
-  DzsetCurrentProductAction,
-  DzsetFavAction,
-  DzremoveFavAction,
-  DzresetCart,
-} from '../DzRedux/DzActions';
-import WrapperScreen from '../DzComp/DzWrapperScreen';
+  BbremoveCartAction,
+  BbaddCartAction,
+  BbsetCurrentProductAction,
+  BbsetFavAction,
+  BbremoveFavAction,
+  BbresetCart,
+} from '../BbStateManagement/BbActions';
+import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {colors} from '../DzComp/DzColor';
-import {H_W} from '../DzComp/DzDim';
-import RefNavigation from '../DzComp/DzRefNavigation';
-import Entypo from 'react-native-vector-icons/Entypo';
+import {colors, textFont} from '../BbFrequentUsage/BbColor';
+import {H_W} from '../BbFrequentUsage/BbResponsive';
+import RefNavigation from '../BbFrequentUsage/BbRefNavigation';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Button} from 'react-native-elements';
-import {DzVerticalTile} from './BbHome';
-import Loop from '../DzComp/DzFlatList';
-import UseHeader from '../DzComp/DzHeader';
-import DzItemCounterWrapper from '../DzComp/DzItemCounterWrapper';
+import Loop from '../BbFrequentUsage//BbFlatList';
+import BbHeader from '../BbFrequentUsage/BbHeader';
+import dp from '../BbAllAssets/Images/1.png';
 
 export const Cart = (props) => {
   useEffect(() => {
     convertObjectToArray();
-  }, [props.DzCart]);
+  }, [props.BbCart]);
 
   const [HorizontalCartArray, setHorizontalCartArray] = useState([]);
 
   const convertObjectToArray = () => {
-    const CartArray = Object.keys(props.DzCart);
+    const CartArray = Object.keys(props.BbCart);
     let UsArr = [];
     CartArray.forEach((element) => {
-      UsArr.push(props.DzCart[element]);
+      UsArr.push(props.BbCart[element]);
     });
     setHorizontalCartArray(UsArr);
   };
@@ -41,142 +43,220 @@ export const Cart = (props) => {
   const insets = useSafeAreaInsets();
   const HEIGHT = H_W.height - (insets.bottom + insets.top);
 
-  const DzGoBack = () => RefNavigation.GoBack();
+  const BbGoBack = () => RefNavigation.GoBack();
 
-  const DzGoToSingleProduct = (item) => {
-    props.DzsetCurrentProductAction(item);
-    RefNavigation.Navigate('DzSP');
+  const BbAddToCart = (item) => {
+    props.BbaddCartAction({...item});
   };
-  const DzinfoScreen = () => RefNavigation.Navigate('DzContact');
+
+  const BbRemoveFromCart = (item) => {
+    props.BbCart[item.id] !== undefined && props.BbremoveCartAction(item);
+  };
+
+  const BbGoToSingleProduct = (item) => {
+    props.BbsetCurrentProductAction(item);
+    RefNavigation.Navigate('BbSP');
+  };
+  const BbinfoScreen = () => RefNavigation.Navigate('BbContact');
 
   return (
     <WrapperScreen style={{backgroundColor: 'white'}}>
-      <View style={styles.DzCart1}>
-        <UseHeader
-          leftIcon={Entypo}
-          leftIconName="chevron-left"
-          leftIconColor={colors.primary}
-          leftIconAction={DzGoBack}
-          Title={<Text style={styles.DzCart2}>Cart</Text>}
-        />
-        <View
-          style={{
-            paddingVertical: HEIGHT * 0.01,
-            // marginBottom: -HEIGHT * 0.02,
-            ...styles.DzCart3,
-          }}>
-          <View style={styles.DzCart4}>
-            <Text style={{fontWeight: 'bold'}}>Total:</Text>
-            <Text style={{fontWeight: 'bold'}}>${props.DzTotal}</Text>
-          </View>
-          <View style={styles.DzCart5}>
-            <Text>Items:</Text>
-            <Text>{props.DzTotalItems}</Text>
-          </View>
-        </View>
-      </View>
-      <View style={{flex: 1}}>
-        <Loop
-          numColumns={2}
-          horizontal={false}
-          data={HorizontalCartArray}
-          renderItem={({item}) => (
-            <DzItemCounterWrapper
-              position="top"
-              Counterlength={HEIGHT * 0.15}
-              style={{marginTop: HEIGHT * 0.05}}
-              item={item}
-              counterColor={colors.primary}
-              counterContentColor={'white'}>
-              <DzVerticalTile
-                item={item}
-                DzGoToSingleProduct={DzGoToSingleProduct}
-                DzFavs={props.DzFavs}
-                DzsetFav={(fd) => props.DzsetFavAction(fd)}
-                DzremoveFav={(fd) => props.DzremoveFavAction(fd)}
-              />
-            </DzItemCounterWrapper>
-          )}
-        />
-      </View>
       <View
         style={{
+          width: 100,
+          height: 100,
+          borderRadius: 50,
+          backgroundColor: 'rgba(188,188,188,0.15)',
+          transform: [{scaleX: H_W.width * 0.016}, {scaleY: H_W.width * 0.017}],
+          position: 'absolute',
+          top: 0,
+          right: 0,
+        }}
+      />
+      <BbHeader
+        leftIcon={AntDesign}
+        leftIconName="arrowleft"
+        leftIconColor={colors.primary}
+        leftIconAction={BbGoBack}
+        rightIcon={MaterialIcons}
+        rightIconName="delete-outline"
+        rightIconAction={() => props.BbresetCart()}
+        Title=""
+      />
+      <View
+        style={{
+          flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
+          marginHorizontal: H_W.width * 0.06,
+          marginBottom: HEIGHT * 0.02,
+          marginTop: HEIGHT * 0.02,
         }}>
+        <View>
+          <Text style={{fontSize: 24}}>Shopping</Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 24,
+            }}>
+            Cart
+          </Text>
+        </View>
+      </View>
+      <Loop
+        horizontal={false}
+        data={HorizontalCartArray}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            onPress={() => BbGoToSingleProduct(item)}
+            style={{
+              width: H_W.width,
+              flexDirection: 'row',
+              alignItems: 'flex-end',
+              justifyContent: 'flex-start',
+              marginBottom: HEIGHT * 0.02,
+            }}>
+            <ImageBackground
+              source={item.image}
+              style={{
+                width: H_W.width * 0.38,
+                height: HEIGHT * 0.18,
+              }}
+              imageStyle={{marginLeft: H_W.width * 0.045}}
+              resizeMode="contain">
+              <View
+                style={{
+                  height: HEIGHT * 0.125,
+                  position: 'absolute',
+                  bottom: 0,
+                  zIndex: -1,
+                  width: '100%',
+                  backgroundColor: item.bgcolor,
+                  borderTopRightRadius: 50,
+                  borderBottomRightRadius: 50,
+                }}
+              />
+            </ImageBackground>
+            <View
+              style={{
+                marginLeft: H_W.width * 0.045,
+                height: HEIGHT * 0.125,
+                width: H_W.width * 0.42,
+              }}>
+              <Text numberOfLines={2} style={{fontSize: 16.5}}>
+                {item.product}
+              </Text>
+              <Text style={{fontWeight: 'bold', fontSize: 16}}>
+                ${item.price}
+              </Text>
+            </View>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                height: HEIGHT * 0.125,
+                marginLeft: H_W.width * 0.03,
+              }}>
+              <TouchableOpacity
+                onPress={() => BbRemoveFromCart(item)}
+                style={{
+                  padding: 4,
+                  backgroundColor: colors.lightBackground,
+                  borderRadius: 5,
+                }}>
+                <FontAwesome name="minus" color={colors.darkGray} />
+              </TouchableOpacity>
+              <View
+                style={{
+                  padding: 4,
+                  backgroundColor: colors.lightBackground,
+                  borderRadius: 5,
+                }}>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    color: colors.darkGray,
+                    fontSize: 13,
+                  }}>
+                  {item.added}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => BbAddToCart(item)}
+                style={{
+                  padding: 4,
+                  backgroundColor: colors.lightBackground,
+                  borderRadius: 5,
+                }}>
+                <FontAwesome name="plus" color={colors.darkGray} />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingHorizontal: H_W.width * 0.05,
+            paddingVertical: HEIGHT * 0.007,
+          }}>
+          <Text
+            style={{
+              fontSize: 17,
+              fontWeight: 'bold',
+              color: colors.lightGrey3,
+            }}>
+            {props.BbTotalItems} items
+          </Text>
+          <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+            ${props.BbTotal}
+          </Text>
+        </View>
         <Button
-          raised
-          onPress={DzinfoScreen}
-          title="Proceed to Checkout"
-          titleStyle={{fontWeight: 'bold', fontSize: 18}}
-          containerStyle={{width: '80%', borderRadius: 50}}
+          onPress={BbinfoScreen}
+          disabled={props.BbTotalItems === 0}
+          title="Add To My Cart"
           buttonStyle={{
+            backgroundColor: colors.primary,
             borderRadius: 50,
             paddingVertical: HEIGHT * 0.02,
-            backgroundColor: colors.primary,
-            shadowColor: colors.primary,
-            shadowOffset: {
-              width: 0,
-              height: 8,
-            },
-            shadowOpacity: 0.46,
-            shadowRadius: 11.14,
+          }}
+          icon={
+            <MaterialCommunityIcons
+              name="cart-outline"
+              size={20}
+              color="white"
+              style={{marginRight: H_W.width * 0.01}}
+            />
+          }
+          containerStyle={{
+            width: H_W.width,
+            borderRadius: 50,
           }}
         />
       </View>
     </WrapperScreen>
   );
 };
-
+const border = {
+  borderWidth: 1,
+  borderColor: 'red',
+};
 const mapStateToProps = (state) => ({
-  DzCart: state.DzCartReducer.items,
-  DzTotal: state.DzCartReducer.totalAmount,
-  DzFavs: state.DzToggleFav,
-  DzTotalItems: state.DzCartReducer.totalItems,
+  BbCart: state.BbCartReducer.items,
+  BbTotal: state.BbCartReducer.totalAmount,
+  BbFavs: state.BbToggleFav,
+  BbTotalItems: state.BbCartReducer.totalItems,
 });
 
 export default connect(mapStateToProps, {
-  DzremoveCartAction,
-  DzaddCartAction,
-  DzsetCurrentProductAction,
-  DzsetFavAction,
-  DzremoveFavAction,
-  DzresetCart,
+  BbremoveCartAction,
+  BbaddCartAction,
+  BbsetCurrentProductAction,
+  BbsetFavAction,
+  BbremoveFavAction,
+  BbresetCart,
 })(Cart);
-
-const styles = StyleSheet.create({
-  DzCart1: {
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    alignItems: 'center',
-  },
-  DzCart2: {
-    color: colors.primary,
-    fontSize: 22,
-  },
-  DzCart3: {
-    backgroundColor: 'white',
-    width: '80%',
-    borderRadius: 10,
-    paddingHorizontal: H_W.width * 0.03,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 7,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 17.11,
-  },
-  DzCart4: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  DzCart5: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  DzCart6: {},
-  DzCart7: {},
-});
