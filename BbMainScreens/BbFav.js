@@ -26,7 +26,7 @@ const BbFavourites = (props) => {
   const BbGoBack = () => NavigationRef.Navigate('BbHome');
 
   return (
-    <WrapperScreen style={{backgroundColor: colors.lightBackground}}>
+    <WrapperScreen style={{backgroundColor: 'white'}}>
       <View
         style={{
           width: 100,

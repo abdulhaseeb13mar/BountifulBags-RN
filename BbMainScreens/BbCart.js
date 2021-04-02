@@ -134,6 +134,13 @@ export const Cart = (props) => {
                   backgroundColor: item.bgcolor,
                   borderTopRightRadius: 50,
                   borderBottomRightRadius: 50,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 1,
+                  },
+                  shadowOpacity: 0.22,
+                  shadowRadius: 2.2,
                 }}
               />
             </ImageBackground>
@@ -163,6 +170,13 @@ export const Cart = (props) => {
                   padding: 4,
                   backgroundColor: colors.lightBackground,
                   borderRadius: 5,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 1,
+                  },
+                  shadowOpacity: 0.22,
+                  shadowRadius: 2.2,
                 }}>
                 <FontAwesome name="minus" color={colors.darkGray} />
               </TouchableOpacity>
@@ -171,6 +185,13 @@ export const Cart = (props) => {
                   padding: 4,
                   backgroundColor: colors.lightBackground,
                   borderRadius: 5,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 1,
+                  },
+                  shadowOpacity: 0.22,
+                  shadowRadius: 2.2,
                 }}>
                 <Text
                   style={{
@@ -187,6 +208,13 @@ export const Cart = (props) => {
                   padding: 4,
                   backgroundColor: colors.lightBackground,
                   borderRadius: 5,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 1,
+                  },
+                  shadowOpacity: 0.22,
+                  shadowRadius: 2.2,
                 }}>
                 <FontAwesome name="plus" color={colors.darkGray} />
               </TouchableOpacity>

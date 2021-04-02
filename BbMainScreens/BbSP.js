@@ -91,7 +91,9 @@ function SingleProduct(props) {
   const BbGoBack = () => NavigationRef.GoBack();
 
   return (
-    <WrapperScreen style={{backgroundColor: BbProduct.bgcolor}}>
+    <WrapperScreen
+      style={{backgroundColor: BbProduct.bgcolor}}
+      statusBar={BbProduct.bgcolor}>
       <KeyboardAwareScrollView bounces={false}>
         <View
           style={{...border, alignItems: 'center', justifyContent: 'center'}}>
@@ -123,7 +125,18 @@ function SingleProduct(props) {
           </View>
           <FastImage
             source={BbProduct.image}
-            style={{width: H_W.width * 0.8, height: HEIGHT * 0.6, ...border}}
+            style={{
+              width: H_W.width * 0.8,
+              height: HEIGHT * 0.6,
+              ...border,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 11,
+              },
+              shadowOpacity: 0.45,
+              shadowRadius: 15.78,
+            }}
             resizeMode="contain"
           />
         </View>

@@ -138,13 +138,6 @@ const styles = StyleSheet.create({
   },
   BbSearch4: {
     width: '85%',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 7,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 17.11,
   },
   BbSearch5: {},
   BbSearch6: {},

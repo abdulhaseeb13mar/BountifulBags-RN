@@ -57,7 +57,7 @@ function BbHome(props) {
   };
 
   return (
-    <WrapperScreen style={{backgroundColor: colors.lightBackground}}>
+    <WrapperScreen style={{backgroundColor: 'white'}}>
       <View
         style={{
           width: 100,
@@ -69,11 +69,11 @@ function BbHome(props) {
           top: 0,
         }}
       />
-      <ScrollView style={{marginTop: 10}}>
+      <ScrollView style={{marginTop: 10}} bounces={false}>
         <BbHeader
           leftIcon={Ionicons}
           leftIconName="ios-heart-circle"
-          leftIconColor="maroon"
+          leftIconColor={colors.primary}
           leftIconAction={BbGotoFav}
           rightIconColor="black"
           rightIcon={MaterialCommunityIcons}
@@ -106,7 +106,13 @@ function BbHome(props) {
               padding: 8,
               backgroundColor: 'white',
               borderRadius: 50,
-              elevation: 3,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.23,
+              shadowRadius: 2.62,
             }}>
             <Ionicons
               name="md-search"
@@ -128,7 +134,7 @@ function BbHome(props) {
           )}
         />
         <Loop
-          style={{marginTop: HEIGHT * 0.03}}
+          style={{marginVertical: HEIGHT * 0.03}}
           data={BbtabProducts}
           renderItem={({item}) => (
             <BbVerticalTile
@@ -205,6 +211,13 @@ export const BbVerticalTile = ({
         backgroundColor: item.bgcolor,
         marginHorizontal: H_W.width * 0.05,
         position: 'relative',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 18.65,
       }}>
       <View
         style={{
@@ -282,6 +295,16 @@ export const TabList = ({item, BbchangeTab, BbcurrentCat}) => {
         backgroundColor:
           BbcurrentCat.id === item.id ? colors.primary : colors.lightBackground,
         marginHorizontal: H_W.width * 0.02,
+        shadowColor:
+          BbcurrentCat.id === item.id
+            ? `rgba(${colors.rgb_Primary},1)`
+            : '#000',
+        shadowOffset: {
+          width: 0,
+          height: BbcurrentCat.id === item.id ? 10 : 3,
+        },
+        shadowOpacity: BbcurrentCat.id === item.id ? 0.47 : 0.27,
+        shadowRadius: BbcurrentCat.id === item.id ? 10.65 : 4.65,
       }}>
       <Text
         style={{
