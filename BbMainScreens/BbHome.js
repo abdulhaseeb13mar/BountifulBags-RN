@@ -1,16 +1,8 @@
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  ImageBackground,
-  ScrollView,
-} from 'react-native';
+import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
-import {colors, textFont} from '../BbFrequentUsage/BbColor';
+import {colors} from '../BbFrequentUsage/BbColor';
 import {H_W} from '../BbFrequentUsage/BbResponsive';
 import Data from '../BbData';
 import Loop from '../BbFrequentUsage//BbFlatList';
@@ -317,109 +309,6 @@ export const TabList = ({item, BbchangeTab, BbcurrentCat}) => {
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  BbHome21: {},
-  BbHome20: {},
-  BbHome19: {},
-  BbHome18: {},
-  BbHome17: {},
-  BbHome16: {},
-  BbHome15: {},
-  BbHome14: {},
-  BbHome13: {},
-  BbHome12: {},
-  BbHome11: {
-    fontSize: 19,
-    fontFamily: textFont.DINAlternate,
-    color: colors.primary,
-  },
-  BbHome10: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-  BbHome9: {
-    marginLeft: H_W.width * 0.045,
-    color: colors.secondary,
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  BbHome8: {display: 'flex', flexDirection: 'row', alignItems: 'center'},
-  BbHome7: {
-    fontSize: 18.5,
-    fontFamily: textFont.DINAlternate,
-    color: colors.darkGray,
-  },
-  BbHome6: {
-    margin: H_W.width * 0.023,
-    width: H_W.width * 0.45,
-    padding: 7,
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-    borderRadius: 8,
-  },
-  BbHome5: {
-    width: '85%',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 7,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 17.11,
-  },
-  BbHome4: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  BbHome3: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    fontFamily: 'Verdana-Bold',
-    fontStyle: 'italic',
-    color: 'white',
-  },
-  BbHome2: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    fontFamily: 'Verdana-Bold',
-    color: 'white',
-  },
-  BbHome1: {
-    backgroundColor: colors.primary,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-  },
-  tabIndicator: {
-    width: 30,
-    borderWidth: 1.8,
-    borderRadius: 10,
-    marginTop: 4,
-    backgroundColor: colors.primary,
-  },
-  HomeTabsText: {
-    marginLeft: H_W.width * 0.05,
-    fontSize: 17.5,
-    fontWeight: 'bold',
-  },
-  HomeTabsWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    marginHorizontal: H_W.width * 0.05,
-    paddingLeft: H_W.width * 0.02,
-    paddingRight: H_W.width * 0.04,
-    borderRadius: 50,
-  },
-});
 
 const mapStateToProps = (state) => {
   return {

@@ -5,10 +5,9 @@ import {connect} from 'react-redux';
 import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {H_W} from '../BbFrequentUsage/BbResponsive';
-import {colors, textFont} from '../BbFrequentUsage/BbColor';
+import {colors} from '../BbFrequentUsage/BbColor';
 import {Button, Overlay} from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {isFormValid} from '../BbFrequentUsage/Bbvalidation';
 import NavPointer from '../BbFrequentUsage/BbRefNavigation';
@@ -70,13 +69,13 @@ const ConfirmOrder = (props) => {
             address: address,
             phonenumber: phone,
             email: email,
-            appname: 'The Food Door',
+            appname: 'BountiFul Bags',
           }),
         },
       );
       const response = await res.json();
       setLoading(false);
-      response.status ? MoveToConfirmOrder() : ShowToast('Some error occurred');
+      response.status ? setShowModal(true) : ShowToast('Some error occurred');
     } catch (error) {
       console.log(error);
     }
@@ -106,10 +105,10 @@ const ConfirmOrder = (props) => {
     }
   };
 
-  const MoveToConfirmOrder = () => {
-    props.BbresetCart();
-    NavPointer.Push('BbConfirmOrder');
-  };
+  // const MoveToConfirmOrder = () => {
+  //   props.BbresetCart();
+  //   NavPointer.Push('BbConfirmOrder');
+  // };
 
   const closeModal = () => {
     setShowModal(false);
@@ -268,65 +267,9 @@ export default connect(mapStateToProps, {BbUserAction, BbresetCart})(
 );
 
 const styles = StyleSheet.create({
-  BbContact1: {
-    backgroundColor: colors.primary,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    alignItems: 'center',
-  },
   BbContact2: {
     color: colors.primary,
     fontSize: 22,
-  },
-  BbContact3: {
-    marginLeft: H_W.width * 0.03,
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  BbContact4: {marginLeft: H_W.width * 0.03, fontSize: 20, fontWeight: 'bold'},
-  BbSm4: {fontSize: H_W.width * 0.045, fontWeight: 'bold'},
-  BbSm3: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  BbSm2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  BbSm1: {
-    width: '85%',
-    backgroundColor: `rgba(${colors.rgb_Primary}, 0.3)`,
-    borderRadius: 18,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    padding: H_W.width * 0.04,
-  },
-  BbSummaryOverlay: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-  },
-  BbModalSubText: {
-    fontSize: H_W.width * 0.045,
-    color: colors.darkGray,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   BbModalHeadText: {
     fontSize: H_W.width * 0.06,
@@ -341,30 +284,6 @@ const styles = StyleSheet.create({
     width: H_W.width * 0.8,
     backgroundColor: colors.primary,
     borderRadius: 10,
-  },
-  BbConfirmButtonContainer: {
-    width: '100%',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    borderRadius: 50,
-  },
-  BbConfirmButton: {
-    backgroundColor: colors.primary,
-
-    borderRadius: 50,
-  },
-  BbConfirmButtonWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: H_W.width * 0.035,
   },
   Input: {
     width: H_W.width * 0.81,
@@ -396,10 +315,6 @@ const styles = StyleSheet.create({
   },
   BbSinglePersonalInfoWrapper: {
     marginVertical: 10,
-  },
-  BbPersonalInfoHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
   BbPersonalInfoWrapper: {
     marginHorizontal: H_W.width * 0.035,

@@ -7,10 +7,9 @@ import {
   BbsetFavAction,
   BbsetCurrentProductAction,
 } from '../BbStateManagement/BbActions';
-import Entypo from 'react-native-vector-icons/Entypo';
 import {H_W} from '../BbFrequentUsage/BbResponsive';
 import BbHeader from '../BbFrequentUsage/BbHeader';
-import {colors, textFont} from '../BbFrequentUsage/BbColor';
+import {colors} from '../BbFrequentUsage/BbColor';
 import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
 import Loop from '../BbFrequentUsage//BbFlatList';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -41,7 +40,6 @@ const BbFavourites = (props) => {
       />
       <View style={{flex: 1}}>
         <Loop
-          // numColumns={2}
           horizontal={false}
           data={props.BbFavs}
           renderItem={({item}) => (

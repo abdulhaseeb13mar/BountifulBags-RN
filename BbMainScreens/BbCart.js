@@ -12,7 +12,7 @@ import {
 } from '../BbStateManagement/BbActions';
 import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {colors, textFont} from '../BbFrequentUsage/BbColor';
+import {colors} from '../BbFrequentUsage/BbColor';
 import {H_W} from '../BbFrequentUsage/BbResponsive';
 import RefNavigation from '../BbFrequentUsage/BbRefNavigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -22,12 +22,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Button} from 'react-native-elements';
 import Loop from '../BbFrequentUsage//BbFlatList';
 import BbHeader from '../BbFrequentUsage/BbHeader';
-import dp from '../BbAllAssets/Images/1.png';
 
 export const Cart = (props) => {
   useEffect(() => {
     convertObjectToArray();
-  }, [props.BbCart]);
+  }, []);
 
   const [HorizontalCartArray, setHorizontalCartArray] = useState([]);
 
@@ -269,10 +268,7 @@ export const Cart = (props) => {
     </WrapperScreen>
   );
 };
-const border = {
-  borderWidth: 1,
-  borderColor: 'red',
-};
+
 const mapStateToProps = (state) => ({
   BbCart: state.BbCartReducer.items,
   BbTotal: state.BbCartReducer.totalAmount,

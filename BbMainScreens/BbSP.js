@@ -1,16 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {H_W} from '../BbFrequentUsage/BbResponsive';
 import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
 import {connect} from 'react-redux';
-import {colors, textFont} from '../BbFrequentUsage/BbColor';
+import {colors} from '../BbFrequentUsage/BbColor';
 import NavigationRef from '../BbFrequentUsage/BbRefNavigation';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -63,30 +57,6 @@ function SingleProduct(props) {
       props.BbremoveCartAction(BbProduct);
   };
 
-  const renderSmallImages = () => {
-    return [BbProduct.images, BbProduct.images, BbProduct.images].map(
-      (item, index) => (
-        <TouchableOpacity
-          onPress={() => setCurrentImage(item)}
-          key={index}
-          style={{
-            backgroundColor: colors.lightBackground2,
-            padding: H_W.width * 0.015,
-            borderRadius: 13,
-            marginHorizontal: H_W.width * 0.03,
-          }}>
-          <ImageBackground
-            source={item}
-            style={{
-              width: H_W.width * 0.11,
-              height: H_W.width * 0.13,
-            }}
-          />
-        </TouchableOpacity>
-      ),
-    );
-  };
-
   const BbGotoCart = () => NavigationRef.Navigate('BbCart');
   const BbGoBack = () => NavigationRef.GoBack();
 
@@ -95,11 +65,9 @@ function SingleProduct(props) {
       style={{backgroundColor: BbProduct.bgcolor}}
       statusBar={BbProduct.bgcolor}>
       <KeyboardAwareScrollView bounces={false}>
-        <View
-          style={{...border, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <View
             style={{
-              ...border,
               width: '100%',
               flexDirection: 'row',
               alignItems: 'center',
@@ -128,7 +96,7 @@ function SingleProduct(props) {
             style={{
               width: H_W.width * 0.8,
               height: HEIGHT * 0.6,
-              ...border,
+
               shadowColor: '#000',
               shadowOffset: {
                 width: 0,
@@ -147,13 +115,11 @@ function SingleProduct(props) {
             alignItems: 'center',
             justifyContent: 'flex-start',
             paddingHorizontal: H_W.width * 0.1,
-            // paddingBottom: HEIGHT * 0.02,
           }}>
           <TouchableOpacity
             onPress={toggleFav}
             style={{
               backgroundColor: 'white',
-              // ...border,
               alignSelf: 'flex-end',
               padding: 10,
               borderRadius: 50,
@@ -165,7 +131,6 @@ function SingleProduct(props) {
           <Text
             style={{
               alignSelf: 'flex-start',
-              ...border,
               width: H_W.width * 0.65,
               fontWeight: 'bold',
               fontSize: 23,
@@ -175,13 +140,12 @@ function SingleProduct(props) {
           <View
             style={{
               alignSelf: 'flex-start',
-              ...border,
               width: '100%',
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <View style={{flexDirection: 'row', ...border}}>
+            <View style={{flexDirection: 'row'}}>
               <StarRating rating={2.5} size={H_W.width * 0.18} />
               <Text
                 style={{
@@ -198,7 +162,6 @@ function SingleProduct(props) {
           </View>
           <Text
             style={{
-              ...border,
               fontWeight: 'bold',
               lineHeight: HEIGHT * 0.03,
               marginTop: HEIGHT * 0.02,
@@ -296,109 +259,10 @@ const mapStateToProps = (state) => {
     BbCart: state.BbCartReducer.items,
   };
 };
-const border = {
-  // borderWidth: 1,
-  borderColor: 'red',
-};
+
 export default connect(mapStateToProps, {
   BbsetFavAction,
   BbremoveFavAction,
   BbremoveCartAction,
   BbaddCartAction,
 })(React.memo(SingleProduct));
-
-const styles = StyleSheet.create({
-  BbSp1: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: H_W.width * 0.03,
-  },
-  BbSp2: {
-    fontWeight: 'bold',
-    color: colors.primary,
-    fontSize: 29,
-    paddingHorizontal: H_W.width * 0.03,
-    fontFamily: textFont.DINAlternate,
-  },
-  BbSp3: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: H_W.width * 0.03,
-  },
-  BbSp4: {
-    marginLeft: H_W.width * 0.065,
-    color: colors.lightGrey3,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlignVertical: 'center',
-  },
-  BbSp5: {
-    paddingHorizontal: H_W.width * 0.03,
-    fontSize: 15,
-    color: colors.darkGray,
-    fontWeight: 'bold',
-    opacity: 0.5,
-  },
-  BbSp6: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    paddingHorizontal: H_W.width * 0.03,
-  },
-  BbSp7: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: `rgba(${colors.rgb_Primary}, 0.2)`,
-    alignSelf: 'stretch',
-    width: H_W.width * 0.4,
-    borderRadius: 50,
-    paddingHorizontal: H_W.width * 0.04,
-  },
-  BbSp8: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 50,
-    padding: 2,
-    backgroundColor: colors.primary,
-  },
-  BbSp9: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.primary,
-  },
-  BbSp10: {
-    alignItems: 'center',
-    padding: 2,
-    borderRadius: 50,
-    backgroundColor: colors.primary,
-    justifyContent: 'center',
-  },
-  BbSp11: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderRadius: 50,
-    width: H_W.width * 0.4,
-    backgroundColor: `rgba(${colors.rgb_Primary}, 0.1)`,
-  },
-  BbSp12: {
-    flex: 1,
-    textAlign: 'center',
-    fontFamily: textFont.DINAlternate,
-    fontSize: 18,
-  },
-  BbSp13: {
-    alignSelf: 'stretch',
-    borderRadius: 50,
-    width: H_W.width * 0.11,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.primary,
-  },
-  BbSp14: {},
-  BbSp15: {},
-  BbSp16: {},
-  BbSp17: {},
-});

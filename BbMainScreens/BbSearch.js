@@ -4,8 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import WrapperScreen from '../BbFrequentUsage/BbWrapperScreen';
 import {H_W} from '../BbFrequentUsage/BbResponsive';
 import NavigationRef from '../BbFrequentUsage/BbRefNavigation';
-import Entypo from 'react-native-vector-icons/Entypo';
-import {colors, textFont} from '../BbFrequentUsage/BbColor';
+import {colors} from '../BbFrequentUsage/BbColor';
 import Data from '../BbData';
 import Loop from '../BbFrequentUsage//BbFlatList';
 import {connect} from 'react-redux';
@@ -47,7 +46,6 @@ function Search(props) {
   const CardRender = (Arr) => {
     return (
       <Loop
-        // numColumns={2}
         horizontal={false}
         data={Arr}
         renderItem={({item}) => (
@@ -123,7 +121,6 @@ export default connect(mapStateToProps, {
 
 const styles = StyleSheet.create({
   BbSearch1: {
-    // backgroundColor: colors.primary,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },
